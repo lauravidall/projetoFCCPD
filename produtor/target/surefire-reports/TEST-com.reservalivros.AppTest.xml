@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="BR"/>
     <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk/23.0.2/libexec/openjdk.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/laurabvidal/Downloads/projetoFCCPD/produtor/target/surefire/surefirebooter-20250329141227599_3.jar /Users/laurabvidal/Downloads/projetoFCCPD/produtor/target/surefire 2025-03-29T14-12-18_754-jvmRun1 surefire-20250329141227599_1tmp surefire_0-20250329141227599_2tmp"/>
+    <property name="sun.java.command" value="/Users/laurabvidal/Downloads/projetoFCCPD/produtor/target/surefire/surefirebooter-20250329142205765_3.jar /Users/laurabvidal/Downloads/projetoFCCPD/produtor/target/surefire 2025-03-29T14-22-05_696-jvmRun1 surefire-20250329142205765_1tmp surefire_0-20250329142205765_2tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/Users/laurabvidal/Downloads/projetoFCCPD/produtor/target/test-classes:/Users/laurabvidal/Downloads/projetoFCCPD/produtor/target/classes:/Users/laurabvidal/.m2/repository/com/rabbitmq/amqp-client/5.16.0/amqp-client-5.16.0.jar:/Users/laurabvidal/.m2/repository/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar:/Users/laurabvidal/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.8.1/junit-jupiter-api-5.8.1.jar:/Users/laurabvidal/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/laurabvidal/.m2/repository/org/junit/platform/junit-platform-commons/1.8.1/junit-platform-commons-1.8.1.jar:/Users/laurabvidal/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:"/>
@@ -29,7 +29,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="apple.awt.application.name" value="ForkedBooter"/>
-    <property name="surefire.real.class.path" value="/Users/laurabvidal/Downloads/projetoFCCPD/produtor/target/surefire/surefirebooter-20250329141227599_3.jar"/>
+    <property name="surefire.real.class.path" value="/Users/laurabvidal/Downloads/projetoFCCPD/produtor/target/surefire/surefirebooter-20250329142205765_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="23.0.2"/>
