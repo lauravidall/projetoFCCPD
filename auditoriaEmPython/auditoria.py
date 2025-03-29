@@ -13,7 +13,7 @@ def auditoria():
 
     channel.queue_bind(exchange=EXCHANGE_NAME, queue=queue_name, routing_key='#')
 
-    print(" [*] Aguardando todas as reservas de livros. Para sair, pressione CTRL+C")
+    print(" [*] Aguardando reservas de livros. Para sair, pressione CTRL+C")
 
     def callback(ch, method, properties, body):
         print(f" [x] Reserva auditada: {body.decode()}")
