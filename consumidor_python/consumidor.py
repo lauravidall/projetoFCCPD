@@ -3,16 +3,15 @@ import sys
 import time
 
 def main():
-    especialidades = ['cardiologista', 'dermatologista', 'pediatra', 'psiquiatra', 'ginecologista',
-                      'oncologista', 'geriatra', 'endocrinologista', 'urologista', 'pneumologista', 'oftalmologista']
+    generos = ['ficcao', 'fantasia', 'misterio', 'romance', 'terror', 'biografia', 'ciencia', 'historia', 'poesia']
 
     while True:
-        print("\nEscolha uma especialidade para filtrar as mensagens:")
-        for i, especialidade in enumerate(especialidades, start=1):
-            print(f"{i}. {especialidade}")
+        print("\nEscolha um gênero para filtrar as reservas de livros:")
+        for i, genero in enumerate(generos, start=1):
+            print(f"{i}. {genero}")
         print("0. Sair")
 
-        escolha = input("Digite o número da especialidade desejada: ")
+        escolha = input("Digite o número do gênero desejado: ")
 
         if escolha == '0':
             print("Saindo...")
@@ -20,22 +19,22 @@ def main():
 
         try:
             indice_escolhido = int(escolha) - 1
-            if 0 <= indice_escolhido < len(especialidades):
-                especialidade = especialidades[indice_escolhido]
-                queue_name = f"consulta_fila_{especialidade}"
+            if 0 <= indice_escolhido < len(generos):
+                genero = generos[indice_escolhido]
+                queue_name = f"reserva_fila_{genero}"
 
                 while True:
                     try:
                         connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
                         channel = connection.channel()
 
-                        print(f"\nAguardando mensagens para a especialidade: {especialidade}.")
+                        print(f"\nAguardando reservas de livros do gênero: {genero}.")
                         print("Pressione 'ctrl+c' para voltar ao menu")
 
                         channel.queue_declare(queue=queue_name, durable=True)
 
                         def callback(ch, method, properties, body):
-                            print(f"Consulta agendada com sucesso! Detalhes: {body.decode()}")
+                            print(f"Reserva recebida! Detalhes: {body.decode()}")
 
                         channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
                         channel.start_consuming()
