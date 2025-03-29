@@ -9,31 +9,31 @@ def start_produtor():
 def start_consumidor():
     # Comando para iniciar o consumidor em Python
     print("Iniciando o consumidor...")
-    subprocess.run(["python3", "consumidor_python/consumidor.py"])
+    subprocess.run(["python3", "consumidorEmPython/consumidor.py"])
 
 def start_auditoria():
-    # Comando para iniciar o backend de auditoria em Python
-    print("Iniciando o backend de auditoria...")
-    subprocess.run(["python3", "backend_auditoria/backend_auditoria.py"])
+    # Comando para iniciar auditoria em Python
+    print("Iniciando auditoria...")
+    subprocess.run(["python3", "auditoriaEmPython/auditoria.py"])
 
 def menu():
     while True:
-        print("\n=== Sistema de Mensagens ===")
+        print("\n***** Sistema de Mensagens *****")
         print("1. Iniciar Produtor")
         print("2. Iniciar Consumidor")
-        print("3. Iniciar Backend de Auditoria")
+        print("3. Iniciar Auditoria")
         print("4. Sair")
 
-        escolha = input("Escolha uma opção (1-4): ")
+        numero = input("Escolha um número de 1 a 4: ")
 
-        if escolha == "1":
+        if numero == "1":
             start_produtor()
-        elif escolha == "2":
+        elif numero == "2":
             start_consumidor()
-        elif escolha == "3":
+        elif numero == "3":
             start_auditoria()
-        elif escolha == "4":
-            print("Saindo do sistema.")
+        elif numero == "4":
+            print("Encerrando o sistema.")
             break
         else:
             print("Opção inválida. Tente novamente.")

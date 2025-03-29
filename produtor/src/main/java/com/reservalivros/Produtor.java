@@ -20,7 +20,7 @@ public class Produtor {
             channel.exchangeDeclare(EXCHANGE_NAME, "topic", true);
 
             Scanner scanner = new Scanner(System.in);
-            System.out.println("=== Sistema de Reserva de Livros ===");
+            System.out.println("***** Sistema de Reserva de Livros *****");
 
             // Lista de gêneros possíveis
             String[] generos = {
@@ -29,7 +29,7 @@ public class Produtor {
             };
 
             while (true) {
-                System.out.print("Informe o ID do usuário (ou 'sair' para encerrar): ");
+                System.out.print("Informe o ID do usuário (ou digite 'sair' para encerrar): ");
                 String usuarioId = scanner.nextLine();
                 if (usuarioId.equalsIgnoreCase("sair")) {
                     break;
@@ -38,15 +38,14 @@ public class Produtor {
                 System.out.print("Título do livro: ");
                 String tituloLivro = scanner.nextLine();
 
-                // Exibe as opções de gêneros para o usuário escolher
                 System.out.println("Escolha o gênero do livro:");
                 for (int i = 0; i < generos.length; i++) {
                     System.out.println((i + 1) + ". " + generos[i]);
                 }
 
-                System.out.print("Digite o número correspondente ao gênero: ");
+                System.out.print("Digite o número do gênero da sua escolha: ");
                 int escolhaGenero = scanner.nextInt();
-                scanner.nextLine(); // Limpar buffer de entrada
+                scanner.nextLine(); 
 
                 String generoLivro = "";
 
