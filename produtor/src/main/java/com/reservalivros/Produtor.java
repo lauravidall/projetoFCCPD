@@ -22,6 +22,12 @@ public class Produtor {
             Scanner scanner = new Scanner(System.in);
             System.out.println("=== Sistema de Reserva de Livros ===");
 
+            // Lista de gêneros possíveis
+            String[] generos = {
+                "ficcao", "fantasia", "misterio", "romance", "terror", 
+                "biografia", "ciencia", "historia", "poesia"
+            };
+
             while (true) {
                 System.out.print("Informe o ID do usuário (ou 'sair' para encerrar): ");
                 String usuarioId = scanner.nextLine();
@@ -32,8 +38,24 @@ public class Produtor {
                 System.out.print("Título do livro: ");
                 String tituloLivro = scanner.nextLine();
 
-                System.out.print("Gênero do livro: ");
-                String generoLivro = scanner.nextLine().toLowerCase();
+                // Exibe as opções de gêneros para o usuário escolher
+                System.out.println("Escolha o gênero do livro:");
+                for (int i = 0; i < generos.length; i++) {
+                    System.out.println((i + 1) + ". " + generos[i]);
+                }
+
+                System.out.print("Digite o número correspondente ao gênero: ");
+                int escolhaGenero = scanner.nextInt();
+                scanner.nextLine(); // Limpar buffer de entrada
+
+                String generoLivro = "";
+
+                if (escolhaGenero >= 1 && escolhaGenero <= generos.length) {
+                    generoLivro = generos[escolhaGenero - 1];
+                } else {
+                    System.out.println("Gênero inválido. Tente novamente.");
+                    continue;
+                }
 
                 String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm"));
                 String mensagem = String.format("[%s] Usuário %s reservou '%s' (Gênero: %s)", timestamp, usuarioId, tituloLivro, generoLivro);
