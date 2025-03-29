@@ -58,4 +58,4 @@ O sistema visa demonstrar a utilização de filas e exchanges do RabbitMQ, utili
 - *Recepção de Todas as Mensagens*: O backend de auditoria recebe todas as mensagens, independentemente da especialidade, para fins de monitoramento.
 
 ## Justificativa para o Uso do topic Exchange
-Utilizamos a exchange do tipo topic porque ela permite maior flexibilidade no roteamento das mensagens. Dessa forma, podemos definir diferentes padrões de chave de roteamento, garantindo que as mensagens cheguem apenas aos consumidores corretos. Isso facilita o processo de gerenciamento das filas por especialidade médica e permite adicionar novas especialidades no futuro sem alterar a lógica principal do produtor ou dos consumidores.
+Utilizamos a exchange do tipo topic porque ela permite maior flexibilidade no roteamento das mensagens. Dessa forma, podemos definir diferentes padrões de chave de roteamento, garantindo que as mensagens cheguem apenas aos consumidores corretos. Isso facilita o processo de gerenciamento das filas por gêneros de livros.
