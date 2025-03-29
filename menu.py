@@ -4,7 +4,7 @@ import subprocess
 def start_produtor():
     # Comando para iniciar o produtor em Java
     print("Iniciando o produtor...")
-    subprocess.run(["java", "-cp", "produtor_java/target/produtor_java-1.0-SNAPSHOT.jar", "com.consultamedica.Produtor"])
+    subprocess.run(["java", "-cp", "produtor/target/produtor-1.0-SNAPSHOT.jar", "com.reservalivros.Produtor"])
 
 def start_consumidor():
     # Comando para iniciar o consumidor em Python

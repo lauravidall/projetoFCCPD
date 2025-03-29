@@ -6,11 +6,12 @@ def auditoria():
     connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
     channel = connection.channel()
 
-    channel.exchange_declare(exchange=EXCHANGE_NAME, exchange_type='fanout', durable=True)
+    channel.exchange_declare(exchange=EXCHANGE_NAME, exchange_type='topic', durable=True)
 
     queue_name = 'auditoria_fila'
     channel.queue_declare(queue=queue_name, durable=True)
-    channel.queue_bind(exchange=EXCHANGE_NAME, queue=queue_name)
+
+    channel.queue_bind(exchange=EXCHANGE_NAME, queue=queue_name, routing_key='#')
 
     print(" [*] Aguardando todas as reservas de livros. Para sair, pressione CTRL+C")
 

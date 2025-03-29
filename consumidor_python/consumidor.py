@@ -40,8 +40,8 @@ def main():
                         channel.start_consuming()
 
                     except pika.exceptions.AMQPConnectionError:
-                        print("Conexão perdida. Tentando reconectar em 5 segundos...")
-                        time.sleep(5)
+                        print("Conexão perdida. Tentando reconectar em 3 segundos...")
+                        time.sleep(3)
                     except KeyboardInterrupt:
                         print("\nParando o consumo de mensagens...")
                         break
