@@ -2,11 +2,11 @@
 
 ## Visão Geral
 Este projeto é uma implementação de um sistema de envio e recebimento de mensagens utilizando RabbitMQ, composto por três principais componentes:
-- *Produtor de Mensagens (Java)*: Envia mensagens relacionadas a agendamentos de consultas médicas.
-- *Consumidor de Mensagens (Python)*: Recebe mensagens de acordo com a especialidade médica escolhida.
-- *Backend de Auditoria (Python)*: Recebe todas as mensagens enviadas, independente da especialidade.
+- *Produtor de Mensagens (Java)*: Envia mensagens relacionadas a reservas de livros.
+- *Consumidor de Mensagens (Python)*: Recebe mensagens de acordo com o gênero de livro escolhido.
+- *Backend de Auditoria (Python)*: Recebe todas as mensagens enviadas, independente do gênero.
 
-O sistema visa demonstrar a utilização de filas e exchanges do RabbitMQ, utilizando o tipo de exchange topic para distribuir mensagens entre diferentes consumidores, de acordo com a especialidade médica.
+O sistema visa demonstrar a utilização de filas e exchanges do RabbitMQ, utilizando o tipo de exchange topic para distribuir mensagens entre diferentes consumidores, de acordo com o gênero.
 
 ## Requisitos
 1. RabbitMQ deve estar instalado e rodando.
@@ -19,31 +19,31 @@ O sistema visa demonstrar a utilização de filas e exchanges do RabbitMQ, utili
 4. Acesse o painel do RabbitMQ em http://localhost:15672 (usuário: guest, senha: guest).
 
 ### Instalação do RabbitMQ (MacOS)
-1. Utilize o Homebrew para instalar RabbitMQ: brew install rabbitmq.
-2. Inicie o servidor RabbitMQ: brew services start rabbitmq.
+1. Utilize o Homebrew para instalar RabbitMQ: brew install rabbitmq
+2. Inicie o servidor RabbitMQ: brew services start rabbitmq
 3. Acesse o painel do RabbitMQ em http://localhost:15672 (usuário: guest, senha: guest).
 
 ## Como Rodar o Projeto
 ### 1. Backend de Auditoria
-- Navegue até o diretório backend_auditoria e execute o comando:
+- Navegue até o diretório auditoriaEmPython e execute o comando:
   sh
-  python3 backend_auditoria.py
+  python3 auditoria.py
   
   Isso iniciará o backend de auditoria, que receberá todas as mensagens enviadas pelo produtor.
 
 ### 2. Consumidor de Mensagens
-- Navegue até o diretório consumidor_python e execute:
+- Navegue até o diretório consumidorEmPython e execute:
   sh
   python3 consumidor.py
   
-  Escolha a especialidade médica para escutar as mensagens específicas dessa fila.
+  Escolha o gênero do livro para escutar as mensagens específicas dessa fila.
 
 ### 3. Produtor de Mensagens
-- Navegue até o diretório produtor_java e execute o comando Maven:
+- Navegue até o diretório produtor e execute o comando Maven:
   sh
-  mvn exec:java -Dexec.mainClass="com.consultamedica.Produtor"
+  mvn exec:java -Dexec.mainClass="com.reservalivros.Produtor" 
   
-  Preencha as informações solicitadas (ID do paciente, tipo de solicitação, data e hora da consulta, especialidade médica e detalhes adicionais).
+  Preencha as informações solicitadas (ID do usuário, nome do livro, gênero do livro).
 
 ## Estrutura do Código
 ### 1. Produtor (Java)
@@ -51,11 +51,11 @@ O sistema visa demonstrar a utilização de filas e exchanges do RabbitMQ, utili
 - *Exchange*: Utilizamos uma exchange do tipo topic para que cada mensagem seja roteada para filas específicas baseadas na chave de roteamento.
 
 ### 2. Consumidor (Python)
-- *Filtragem por Especialidade*: O consumidor permite escolher uma especialidade médica e escutar apenas as mensagens dessa categoria.
+- *Filtragem por Gênero*: O consumidor permite escolher um gênero de livro e escutar apenas as mensagens dessa categoria.
 - *Persistência*: A fila também é marcada como durável para garantir que as mensagens fiquem disponíveis até serem consumidas.
 
 ### 3. Backend de Auditoria (Python)
-- *Recepção de Todas as Mensagens*: O backend de auditoria recebe todas as mensagens, independentemente da especialidade, para fins de monitoramento.
+- *Recepção de Todas as Mensagens*: O backend de auditoria recebe todas as mensagens, independentemente do gênero, para fins de monitoramento.
 
 ## Justificativa para o Uso do topic Exchange
 Utilizamos a exchange do tipo topic porque ela permite maior flexibilidade no roteamento das mensagens. Dessa forma, podemos definir diferentes padrões de chave de roteamento, garantindo que as mensagens cheguem apenas aos consumidores corretos. Isso facilita o processo de gerenciamento das filas por gêneros de livros.
