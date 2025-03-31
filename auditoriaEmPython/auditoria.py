@@ -1,6 +1,6 @@
 import pika
 
-EXCHANGE_NAME = 'reservas_livros'
+EXCHANGE_NAME = 'reserva_livros'
 QUEUE_NAME = 'auditoria_fila'
 ROUTING_KEY = '#'
 
