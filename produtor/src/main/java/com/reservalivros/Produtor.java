@@ -26,7 +26,8 @@ public class Produtor {
     private static void enviarMensagem(Channel channel, String usuarioId, String tituloLivro, String generoLivro) throws Exception {
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm"));
         String mensagem = String.format("[%s] Usuário %s reservou '%s' (Gênero: %s)", timestamp, usuarioId, tituloLivro, generoLivro);
-        String routingKey = "reserva." + generoLivro;
+        
+        String routingKey = "reserva." + generoLivro; 
         
         AMQP.BasicProperties props = new AMQP.BasicProperties.Builder()
                 .deliveryMode(2)
@@ -35,6 +36,7 @@ public class Produtor {
         channel.basicPublish(EXCHANGE_NAME, routingKey, props, mensagem.getBytes("UTF-8"));
         System.out.println("Reserva enviada: " + mensagem);
     }
+    
 
     private static String escolherGenero(Scanner scanner) {
         System.out.println("Escolha o gênero do livro:");
@@ -55,10 +57,13 @@ public class Produtor {
     }
 
     public static void main(String[] argv) {
-        try (Connection connection = configurarFactory().newConnection();
-             Channel channel = connection.createChannel();
-             Scanner scanner = new Scanner(System.in)) {
-            
+        System.out.println("Tentando conectar ao RabbitMQ...");
+try (Connection connection = configurarFactory().newConnection();
+     Channel channel = connection.createChannel();
+     Scanner scanner = new Scanner(System.in)) {
+
+    System.out.println("Conectado com sucesso!");
+
             channel.exchangeDeclare(EXCHANGE_NAME, "topic", true);
             System.out.println("***** Sistema de Reserva de Livros *****");
             

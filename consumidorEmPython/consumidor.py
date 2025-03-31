@@ -1,14 +1,24 @@
 import pika
 import time
 
+EXCHANGE_NAME = "reserva_livros"
 generos = ['ficcao', 'fantasia', 'misterio', 'romance', 'terror', 'biografia', 'ciencia', 'historia', 'poesia']
 
-def conectar_fila(queue_name):
+def conectar_fila(queue_name, routing_key):
     while True:
         try:
             conexao = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
             canal = conexao.channel()
+            
+            # Declara a exchange (caso ainda não tenha sido criada)
+            canal.exchange_declare(exchange=EXCHANGE_NAME, exchange_type='topic', durable=True)
+            
+            # Declara a fila
             canal.queue_declare(queue=queue_name, durable=True)
+            
+            # Faz o binding da fila ao exchange com a routing key correta
+            canal.queue_bind(exchange=EXCHANGE_NAME, queue=queue_name, routing_key=routing_key)
+
             return conexao, canal
         except pika.exceptions.AMQPConnectionError:
             print("Conexão perdida. Tentando reconectar em 3 segundos...")
@@ -16,7 +26,9 @@ def conectar_fila(queue_name):
 
 def consumir_mensagens(genero):
     queue_name = f"reserva_fila_{genero}"
-    conexao, canal = conectar_fila(queue_name)
+    routing_key = f"reserva.{genero}"  # Routing key precisa bater com o que o produtor usa
+
+    conexao, canal = conectar_fila(queue_name, routing_key)
     
     print(f"\nAguardando reservas de livros do gênero: {genero}.")
     print("Pressione 'CTRL+C' para voltar ao menu")
