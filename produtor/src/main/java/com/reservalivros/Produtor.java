@@ -4,6 +4,7 @@ import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import java.util.HashSet;
 import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,6 +17,15 @@ public class Produtor {
         "ficcao", "fantasia", "misterio", "romance", "terror", 
         "biografia", "ciencia", "historia", "poesia"
     };
+
+    private static final HashSet<String> GENEROS_SET = new HashSet<>();
+    private static final HashSet<String> LIVROS_RESERVADOS = new HashSet<>();
+    
+    static {
+        for (String genero : GENEROS) {
+            GENEROS_SET.add(genero.toLowerCase());
+        }
+    }
 
     private static ConnectionFactory configurarFactory() {
         ConnectionFactory factory = new ConnectionFactory();
@@ -37,51 +47,73 @@ public class Produtor {
         System.out.println("Reserva enviada: " + mensagem);
     }
     
-
     private static String escolherGenero(Scanner scanner) {
-        System.out.println("Escolha o gênero do livro:");
-        for (int i = 0; i < GENEROS.length; i++) {
-            System.out.println((i + 1) + ". " + GENEROS[i]);
+        while (true) {
+            System.out.println("Escolha o gênero do livro:");
+            for (int i = 0; i < GENEROS.length; i++) {
+                System.out.println((i + 1) + ". " + GENEROS[i]);
+            }
+            
+            System.out.print("Digite o número ou o nome do gênero da sua escolha: ");
+            String entrada = scanner.nextLine().trim().toLowerCase();
+            
+            try {
+                int escolha = Integer.parseInt(entrada);
+                if (escolha >= 1 && escolha <= GENEROS.length) {
+                    return GENEROS[escolha - 1];
+                }
+            } catch (NumberFormatException e) {
+                if (GENEROS_SET.contains(entrada)) {
+                    return entrada;
+                }
+            }
+            
+            System.out.println("Erro: Gênero inválido. Por favor, escolha um dos gêneros listados.");
+        }
+    }
+
+    private static String normalizarTitulo(String titulo) {
+        titulo = titulo.trim().toLowerCase();
+        String[] palavras = titulo.split(" ");
+        StringBuilder sb = new StringBuilder();
+        
+        for (String palavra : palavras) {
+            if (!palavra.isEmpty()) {
+                sb.append(Character.toUpperCase(palavra.charAt(0))).append(palavra.substring(1)).append(" ");
+            }
         }
         
-        System.out.print("Digite o número do gênero da sua escolha: ");
-        int escolha = scanner.nextInt();
-        scanner.nextLine(); 
-        
-        if (escolha >= 1 && escolha <= GENEROS.length) {
-            return GENEROS[escolha - 1];
-        } else {
-            System.out.println("Gênero inválido. Tente novamente.");
-            return null;
-        }
+        return sb.toString().trim();
     }
 
     public static void main(String[] argv) {
         System.out.println("Tentando conectar ao RabbitMQ...");
-try (Connection connection = configurarFactory().newConnection();
-     Channel channel = connection.createChannel();
-     Scanner scanner = new Scanner(System.in)) {
-
-    System.out.println("Conectado com sucesso!");
-
+        try (Connection connection = configurarFactory().newConnection();
+             Channel channel = connection.createChannel();
+             Scanner scanner = new Scanner(System.in)) {
+            
+            System.out.println("Conectado com sucesso!");
             channel.exchangeDeclare(EXCHANGE_NAME, "topic", true);
             System.out.println("***** Sistema de Reserva de Livros *****");
             
             while (true) {
                 System.out.print("Informe o ID do usuário (ou digite 'sair' para encerrar): ");
-                String usuarioId = scanner.nextLine();
+                String usuarioId = scanner.nextLine().trim();
                 if (usuarioId.equalsIgnoreCase("sair")) {
                     break;
                 }
                 
                 System.out.print("Título do livro: ");
-                String tituloLivro = scanner.nextLine();
+                String tituloLivro = normalizarTitulo(scanner.nextLine());
                 
-                String generoLivro;
-                do {
-                    generoLivro = escolherGenero(scanner);
-                } while (generoLivro == null);
+                if (LIVROS_RESERVADOS.contains(tituloLivro)) {
+                    System.out.println("LIVRO JÁ RESERVADO: " + tituloLivro);
+                    continue;
+                }
                 
+                String generoLivro = escolherGenero(scanner);
+                
+                LIVROS_RESERVADOS.add(tituloLivro);
                 enviarMensagem(channel, usuarioId, tituloLivro, generoLivro);
             }
             
