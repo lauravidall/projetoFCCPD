@@ -14,8 +14,8 @@ public class Produtor {
     private static final String EXCHANGE_NAME = "reserva_livros";
     
     private static final String[] GENEROS = {
-        "ficcao", "fantasia", "misterio", "romance", "terror", 
-        "biografia", "ciencia", "historia", "poesia"
+        "Ficção", "Fantasia", "Mistério", "Romance", "Terror", 
+        "Biografia", "Ciência", "História", "Poesia"
     };
 
     private static final HashSet<String> GENEROS_SET = new HashSet<>();
@@ -44,17 +44,20 @@ public class Produtor {
                 .build();
         
         channel.basicPublish(EXCHANGE_NAME, routingKey, props, mensagem.getBytes("UTF-8"));
-        System.out.println("Reserva enviada: " + mensagem);
+        System.out.println("\n======================================");
+        System.out.println("Reserva enviada com sucesso!");
+        System.out.println("======================================\n");
     }
     
     private static String escolherGenero(Scanner scanner) {
         while (true) {
-            System.out.println("Escolha o gênero do livro:");
+            System.out.println("\n======= Escolha o Gênero do Livro =======");
             for (int i = 0; i < GENEROS.length; i++) {
-                System.out.println((i + 1) + ". " + GENEROS[i]);
+                System.out.printf("%d - %s\n", i + 1, GENEROS[i]);
             }
+            System.out.println("=========================================");
             
-            System.out.print("Digite o número ou o nome do gênero da sua escolha: ");
+            System.out.print("Digite o número ou o nome do gênero: ");
             String entrada = scanner.nextLine().trim().toLowerCase();
             
             try {
@@ -64,11 +67,11 @@ public class Produtor {
                 }
             } catch (NumberFormatException e) {
                 if (GENEROS_SET.contains(entrada)) {
-                    return entrada;
+                    return entrada.substring(0, 1).toUpperCase() + entrada.substring(1);
                 }
             }
             
-            System.out.println("Erro: Gênero inválido. Por favor, escolha um dos gêneros listados.");
+            System.out.println("Erro: Gênero inválido. Tente novamente.");
         }
     }
 
@@ -94,7 +97,9 @@ public class Produtor {
             
             System.out.println("Conectado com sucesso!");
             channel.exchangeDeclare(EXCHANGE_NAME, "topic", true);
+            System.out.println("\n========================================");
             System.out.println("***** Sistema de Reserva de Livros *****");
+            System.out.println("========================================\n");
             
             while (true) {
                 System.out.print("Informe o ID do usuário (ou digite 'sair' para encerrar): ");
@@ -107,7 +112,9 @@ public class Produtor {
                 String tituloLivro = normalizarTitulo(scanner.nextLine());
                 
                 if (LIVROS_RESERVADOS.contains(tituloLivro)) {
+                    System.out.println("\n========================================");
                     System.out.println("LIVRO JÁ RESERVADO: " + tituloLivro);
+                    System.out.println("========================================\n");
                     continue;
                 }
                 
