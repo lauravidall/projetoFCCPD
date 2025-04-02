@@ -6,7 +6,7 @@ processos = []
 def start_produtor():
     # Comando para iniciar o produtor em Java
     print("Iniciando o produtor...")
-    subprocess.run(["java", "-cp", "produtor/target/produtor-1.0-SNAPSHOT.jar", "com.reservalivros.Produtor"])
+    subprocess.run(["mvn", "exec:java", "-Dexec.mainClass=com.reservalivros.Produtor"], cwd="produtor")
 
 def start_consumidor():
     # Comando para iniciar o consumidor em Python
