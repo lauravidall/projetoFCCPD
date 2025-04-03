@@ -58,7 +58,6 @@ O sistema visa demonstrar a utilização de filas e exchanges do RabbitMQ, utili
 
 ### 2. Consumidor (Python)
 - *Filtragem por Gênero*: O consumidor permite escolher um gênero de livro e escutar apenas as mensagens dessa categoria.
-- *Persistência*: A fila também é marcada como durável para garantir que as mensagens fiquem disponíveis até serem consumidas.
 
 ### 3. Backend de Auditoria (Python)
 - *Recepção de Todas as Mensagens*: O backend de auditoria recebe todas as mensagens, independentemente do gênero, para fins de monitoramento.
