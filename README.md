@@ -24,21 +24,26 @@ O sistema visa demonstrar a utilização de filas e exchanges do RabbitMQ, utili
 3. Acesse o painel do RabbitMQ em http://localhost:15672 (usuário: guest, senha: guest).
 
 ## Como Rodar o Projeto
-### 1. Backend de Auditoria
+### 1. Menu
+- Abra o terminal e execute o comando sh python3 menu.py
+  Isso iniciará o menu, que lhe dará a opção de rodar o produtor, o consumidor, a auditoria ou sair.
+  
+- Caso queira rodar os componentes separadamente, use os passos (1.1), (1.2) e (1.3)
+### 1.1. Backend de Auditoria
 - Navegue até o diretório auditoriaEmPython e execute o comando:
   sh
   python3 auditoria.py
   
   Isso iniciará o backend de auditoria, que receberá todas as mensagens enviadas pelo produtor.
 
-### 2. Consumidor de Mensagens
+### 1.2. Consumidor de Mensagens
 - Navegue até o diretório consumidorEmPython e execute:
   sh
   python3 consumidor.py
   
   Escolha o gênero do livro para escutar as mensagens específicas dessa fila.
 
-### 3. Produtor de Mensagens
+### 1.3. Produtor de Mensagens
 - Navegue até o diretório produtor e execute o comando Maven:
   sh
   mvn exec:java -Dexec.mainClass="com.reservalivros.Produtor" 
