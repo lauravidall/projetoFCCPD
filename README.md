@@ -26,6 +26,7 @@ O sistema visa demonstrar a utilização de filas e exchanges do RabbitMQ, utili
 ## Como Rodar o Projeto
 ### 1. Menu
 - Abra o terminal e execute o comando sh python3 menu.py
+
   Isso iniciará o menu, que lhe dará a opção de rodar o produtor, o consumidor, a auditoria ou sair.
   
 - Caso queira rodar os componentes separadamente, use os passos (1.1), (1.2) e (1.3)
