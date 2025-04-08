@@ -14,8 +14,7 @@ public class Produtor {
     private static final String EXCHANGE_NAME = "reserva_livros";
     
     private static final String[] GENEROS = {
-        "Ficção", "Fantasia", "Mistério", "Romance", "Terror", 
-        "Biografia", "Ciência", "História", "Poesia"
+        "Ficcao", "Fantasia", "Misterio", "Romance", "Terror", "Biografia", "Ciencia", "Historia", "Poesia"
     };
 
     private static final HashSet<String> GENEROS_SET = new HashSet<>();
